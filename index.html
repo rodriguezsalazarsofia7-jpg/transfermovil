@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>TransferMovil</title>
+</head>
+
+<body>
+
+<h2>TransferMovil</h2>
+
+<input type="text" id="usuario" placeholder="Usuario">
+<input type="password" id="password" placeholder="Contraseña">
+<button onclick="login()">Iniciar sesión</button>
+
+<p id="msg"></p>
+
+<script>
+function login() {
+    fetch("http://127.0.0.1:5000/login", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            usuario: document.getElementById("usuario").value,
+            password: document.getElementById("password").value
+        })
+    })
+    .then(res => {
+        if (!res.ok) throw new Error();
+        return res.json();
+    })
+    .then(() => {
+        document.getElementById("msg").innerText = "Login correcto";
+    })
+    .catch(() => {
+        document.getElementById("msg").innerText = "Credenciales incorrectas";
+    });
+}
+</script>
+
+</body>
+</html>
